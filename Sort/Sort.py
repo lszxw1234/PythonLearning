@@ -30,13 +30,35 @@ def insertion_sort(list):
             j -= 1
         list[j] = temp
     return list
+def shell_sort(list):
+    n = len(list)
+    #initial step
+    step = 2
+    gap = n / step
+    while gap > 0:
+        for i in range(0,gap):
+            j = i + gap
+            while j < n:
+                k = j - gap
+                key = list[j]
+                while k >= 0:
+                    if list[k] > key:
+                        list[k + gap] = list[k]
+                        list[k] = key
+                    k -= gap
+                j += gap
+        gap /= step
+    return list
 
 
 
+list = [3,1,2,5,6,9,4]
+list1 = copy.copy(list)
+list2 = copy.copy(list)
+list3 = copy.copy(list)
+list4 = copy.copy(list)
 
-list1 = [3,1,2,5,6,9,4]
-list2 = copy.copy(list1)
-list3 = copy.copy(list1)
-print(bubble_sort(list1))
-print(selection_Sort(list2))
+print bubble_sort(list1)
+print selection_Sort(list2)
 print insertion_sort(list3)
+print shell_sort(list4)
