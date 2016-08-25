@@ -1,5 +1,5 @@
 import copy
-def bubble_sort(list):
+def bubble_Sort(list):
     length = len(list)
     #first reduce
     for i in range(length):
@@ -20,7 +20,7 @@ def selection_Sort(list):
         list[m],list[i] = list[i], list[m]
     return list
 
-def insertion_sort(list):
+def insertion_Sort(list):
     n = len(list)
     for i in range(1,n):
         temp = list[i]
@@ -30,7 +30,12 @@ def insertion_sort(list):
             j -= 1
         list[j] = temp
     return list
-def shell_sort(list):
+
+def shell_Sort(list):
+    """
+
+    :type list: object
+    """
     n = len(list)
     #initial step
     step = 2
@@ -50,15 +55,38 @@ def shell_sort(list):
         gap /= step
     return list
 
-
-
+def adjust_heap(list, i, size):
+    lchild = 2 * i + 1
+    rchild = 2 * i + 2
+    max = i
+    if i < size / 2:
+        if lchild < size and list[lchild] > list[max]:
+            max = lchild
+        if rchild < size and list[rchild] > list[max]:
+            max = rchild
+        if max != i:
+            list[max], list[i] = list[i], list[max]
+            adjust_heap(list,max,size)
+def build_heap(list,size):
+    for i in range(0,(size/2))[::-1]:
+        adjust_heap(list,i,size)
+def heap_Sort(list):
+    size = len(list)
+    build_heap(list,size)
+    for i in range(0,size)[::-1]:
+        list[0], list[i] = list[i], list[0]
+        adjust_heap(list,0,i)
+    return list
+#Test
 list = [3,1,2,5,6,9,4]
 list1 = copy.copy(list)
 list2 = copy.copy(list)
 list3 = copy.copy(list)
 list4 = copy.copy(list)
+list5 = copy.copy(list)
 
-print bubble_sort(list1)
+print bubble_Sort(list1)
 print selection_Sort(list2)
-print insertion_sort(list3)
-print shell_sort(list4)
+print insertion_Sort(list3)
+print shell_Sort(list4)
+print heap_Sort(list5)
