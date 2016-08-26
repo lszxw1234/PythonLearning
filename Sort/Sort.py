@@ -32,14 +32,10 @@ def insertion_Sort(list):
     return list
 
 def shell_Sort(list):
-    """
-
-    :type list: object
-    """
     n = len(list)
     #initial step
     step = 2
-    gap = n / step
+    gap = n // step
     while gap > 0:
         for i in range(0,gap):
             j = i + gap
@@ -52,7 +48,7 @@ def shell_Sort(list):
                         list[k] = key
                     k -= gap
                 j += gap
-        gap /= step
+        gap = gap // step
     return list
 
 def adjust_heap(list, i, size):
@@ -67,9 +63,11 @@ def adjust_heap(list, i, size):
         if max != i:
             list[max], list[i] = list[i], list[max]
             adjust_heap(list,max,size)
+
 def build_heap(list,size):
-    for i in range(0,(size/2))[::-1]:
+    for i in range(0,(size//2))[::-1]:
         adjust_heap(list,i,size)
+
 def heap_Sort(list):
     size = len(list)
     build_heap(list,size)
@@ -77,6 +75,32 @@ def heap_Sort(list):
         list[0], list[i] = list[i], list[0]
         adjust_heap(list,0,i)
     return list
+
+
+def merge_Sort(list):
+    if len(list) <= 1:
+        return list
+    middle = len(list)//2
+    left = merge_Sort(list[:middle])
+    right = merge_Sort(list[middle:])
+    return merge(left,right)
+
+def merge(left,right):
+    l, r = 0,0
+    result = []
+    while l < len(left) and r < len(right):
+        if left[l] < right[r]:
+            result.append(left[l])
+            l += 1
+        else:
+            result.append(right[r])
+            r += 1
+    result += left[l:]
+    result += right[r:]
+    return result
+
+
+
 #Test
 list = [3,1,2,5,6,9,4]
 list1 = copy.copy(list)
@@ -84,9 +108,11 @@ list2 = copy.copy(list)
 list3 = copy.copy(list)
 list4 = copy.copy(list)
 list5 = copy.copy(list)
+list6 = copy.copy(list)
 
-print bubble_Sort(list1)
-print selection_Sort(list2)
-print insertion_Sort(list3)
-print shell_Sort(list4)
-print heap_Sort(list5)
+print (bubble_Sort(list1))
+print (selection_Sort(list2))
+print (insertion_Sort(list3))
+print (shell_Sort(list4))
+print (heap_Sort(list5))
+print (merge_Sort(list6))
