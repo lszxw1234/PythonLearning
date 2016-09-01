@@ -51,30 +51,33 @@ def shell_Sort(list):
         gap = gap // step
     return list
 
-def adjust_heap(list, i, size):
-    lchild = 2 * i + 1
-    rchild = 2 * i + 2
-    max = i
-    if i < size / 2:
-        if lchild < size and list[lchild] > list[max]:
-            max = lchild
-        if rchild < size and list[rchild] > list[max]:
-            max = rchild
-        if max != i:
-            list[max], list[i] = list[i], list[max]
-            adjust_heap(list,max,size)
-
-def build_heap(list,size):
-    for i in range(0,(size//2))[::-1]:
-        adjust_heap(list,i,size)
 
 def heap_Sort(list):
-    size = len(list)
-    build_heap(list,size)
-    for i in range(0,size)[::-1]:
-        list[0], list[i] = list[i], list[0]
-        adjust_heap(list,0,i)
+    # create max heap
+    for start in range((len(list) - 2) // 2, -1, -1):
+        sift_Down(list, start, len(list) - 1)
+
+    # heap sort
+    for end in range(len(list) - 1, 0, -1):
+        list[0], list[end] = list[end], list[0]
+        sift_Down(list, 0, end - 1)
     return list
+
+
+# adjust max heap.
+def sift_Down(lst, start, end):
+    root = start
+    while True:
+        child = 2 * root + 1
+        if child > end:
+            break
+        if child + 1 <= end and lst[child] < lst[child + 1]:
+            child += 1
+        if lst[root] < lst[child]:
+            lst[root], lst[child] = lst[child], lst[root]
+            root = child
+        else:
+            break
 
 
 def merge_Sort(list):
